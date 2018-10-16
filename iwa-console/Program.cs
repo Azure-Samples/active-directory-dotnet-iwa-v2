@@ -30,15 +30,8 @@ using System.Threading.Tasks;
 namespace iwa_console
 {
     /// <summary>
-    /// This sample signs-in a user in a two steps process:
-    /// - it displays a URL and a code, and asks the user to navigate to the URL in a Web browser, and enter the code
-    /// - then the user signs-in (and goes through multiple factor authentication if needed)
-    /// and the sample displays information about the user by calling the Microsoft Graph in the name of the signed-in user
-    /// 
-    /// It uses the Device code flow, which is normally used for devices which don't have a Web browser (which is the case for a
-    /// .NET Core app, iOT, etc ...)
-    /// 
-    /// For more information see https://aka.ms/msal-net-device-code-flow
+    /// This sample signs-in the user signed-in on a Windows machine joined to a Windows domain or AAD joined
+    /// For more information see https://aka.ms/msal-net-iwa
     /// </summary>
     class Program
     {

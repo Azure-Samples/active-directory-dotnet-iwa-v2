@@ -7,7 +7,7 @@ client: .NET console app
 service: Microsoft Graph
 endpoint: AAD V2
 ---
-# Invoking an API protected by Azure AD with Integrated Windows Authentication on a Windows domain jointed or AAD joined machine
+# Invoking an API protected by Azure AD with Integrated Windows Authentication, on a Windows domain jointed or AAD joined machine
 
 [![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnet-iwa-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=0)
 
@@ -15,7 +15,7 @@ endpoint: AAD V2
 
 ### Overview
 
-This sample demonstrates how to leverage MSAL.NET from apps that run on a domain joined or AAD joined Windows machine. It enables these apps to:
+This sample demonstrates how to use MSAL.NET from apps that run on a domain joined or AAD joined Windows machine. It enables these apps to:
 
 - authenticate the user signed-in on the Windows machine
 - and call to a web API (in this case, the [Microsoft Graph](https://graph.microsoft.com))
@@ -30,7 +30,7 @@ The application obtains tokens through Integrated Windows Authentication (Kerber
 
 ## About the code
 
-The code for handling the token acquisition process is simple, as it boils down to calling the `AcquireTokenWithDeviceCodeAsync` method of `PublicClientApplication` to which you pass a callback that will display information to the user about where they should nativate to, and which code to enter to initiate a sign-in. See the `GetTokenForWebApiUsingDeviceCodeFlowAsync` methodin MyInformation.cs.
+The code for handling the token acquisition process is simple, as it boils down to calling the `AcquireTokenByIntegratedWindowsAuthAsync` method of `PublicClientApplication`. See the `GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync` method in `PublicAppUsingIntegratedWindowsAuthentication.cs`.
 
 ```CSharp
 private async Task<AuthenticationResult> GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync(IEnumerable<string> scopes)
@@ -77,7 +77,7 @@ When you run the sample, if you are running on a domain joined or AAD joined Win
 
 ### Optional: configure the sample as an app in your directory tenant
 
-The instructions so far leveraged the Azure AD entry for the app in a Microsoft test tenant: given that the app is multitenant, anybody can run the sample against that app entry.
+The instructions so far used the Azure AD entry for the app in a Microsoft test tenant: given that the app is multitenant, anybody can run the sample against that app entry.
 To register your project in your own Azure AD tenant, you can find instructions to manually provision the sample in your own tenant, so that you can exercise complete control on the app settings and behavior.
 
 #### First step: choose the Azure AD tenant where you want to create your applications
@@ -95,7 +95,7 @@ of the Azure Active Directory window respectively as *Name* and *Directory ID*
 #### Register the client app (active-directory-dotnet-iwa)
 
 1. In the  **Azure Active Directory** pane, click on **App registrations** and choose **New application registration**.
-1. Enter a friendly name for the application, for example 'active-directory-dotnet-deviceprofile' and select 'Native' as the *Application Type*.
+1. Enter a friendly name for the application, for example 'active-directory-dotnet-iwa' and select 'Native' as the *Application Type*.
 1. For the *Redirect URI*, enter `https://<your_tenant_name>/active-directory-dotnetcore-iwa`, replacing `<your_tenant_name>` with the name of your Azure AD tenant.
 1. Click **Create** to create the application.
 1. In the succeeding page, Find the *Application ID* value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
