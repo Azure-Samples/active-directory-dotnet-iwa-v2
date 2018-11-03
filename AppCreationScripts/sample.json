@@ -1,8 +1,8 @@
 {
   "Sample": {
-    "Title": ".NET Console application using MSAL.NET with Integrated Windows Authentication to acquire an access token and call Microsoft Graph API",
+    "Title": "Invoking an API protected by Azure AD with Integrated Windows Authentication, on a Windows domain jointed or AAD joined machine",
     "Level": 200,
-    "Client": "Desktop (Console)",
+    "Client": ".NET console app",
     "Service": "Microsoft Graph",
     "RepositoryUrl": "active-directory-dotnet-iwa-v2",
     "Endpoint": "AAD v2.0"
@@ -15,7 +15,7 @@
     {
       "Id": "client",
       "Name": "iwa-console",
-      "Kind": "Desktop",
+      "Kind": "Console",
       "UsesROPCOrIWA": true,
       "Audience": "AzureADMultipleOrgs",
       "RequiredResourcesAccess": [
