@@ -119,8 +119,8 @@ Open the solution in Visual Studio to configure the projects
 #### Configure the client project
 
 1. Open the `iwa-console\appsettings.json` file
-1. Find the line where `clientId` is set and replace the existing value with the application ID (clientId) of the `active-directory-dotnet-iwa` application copied from the Azure portal.
-1. [optionaly] Find the line where `Tenant` is set and replace the existing value with your tenant ID.
+1. Find the line where `clientId` is set and replace the existing value with the application ID (clientId) of the `iwa-console` application copied from the Azure portal.
+1. [optionally] Find the line where `Tenant` is set and replace the existing value with your tenant ID.
 
 ## Community Help and Support
 
