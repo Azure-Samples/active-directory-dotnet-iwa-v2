@@ -15,7 +15,7 @@
     {
       "Id": "client",
       "Name": "iwa-console",
-      "Kind": "Console",
+      "Kind": "Desktop",
       "UsesROPCOrIWA": true,
       "Audience": "AzureADMultipleOrgs",
       "RequiredResourcesAccess": [
