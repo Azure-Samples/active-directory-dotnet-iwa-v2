@@ -57,10 +57,19 @@ Open the solution in Visual Studio, restore the NuGet packages, select the proje
 
 When you run the sample, if you are running on a domain joined or AAD joined Windows machine, it will display your information as well as the information about your manager.
 
-### (Optional): Configure the sample as an app in your directory tenant
+### Step 2:(Optional): Configure the sample as an app in your directory tenant
 
 The instructions so far used the Azure AD entry for the app in a Microsoft test tenant: given that the app is multi-tenant, anybody can run the sample against that app registration.
 To register your project in your own Azure AD tenant, you can find instructions to manually provision the sample in your own tenant, so that you can exercise complete control on the app settings and behavior.
+
+There is one project in this sample. To register it, you can:
+
+- either follow the steps in the paragraphs below ([Step 2](#step-2--register-the-sample-with-your-azure-active-directory-tenant) and [Step 3](#step-3--configure-the-sample-to-use-your-azure-ad-tenant))
+- or use PowerShell scripts that:
+  - **automatically** create for you the Azure AD applications and related objects (passwords, permissions, dependencies)
+  - modify the Visual Studio projects' configuration files.
+
+If you want to use this automation, read the instructions in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
 
 #### Choose the Azure AD tenant where you want to create your applications
 
