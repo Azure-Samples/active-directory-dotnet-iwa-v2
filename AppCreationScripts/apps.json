@@ -23,6 +23,11 @@
           "Resource": "Microsoft Graph",
           "DelegatedPermissions": [ "User.Read", "User.ReadBasic.All" ]
         }
+      ],
+      "ManualSteps": [
+        {
+          "Comment" :  "Navigate to the API permissions page and click on 'Grant admin consent for {tenant}'"
+        }
       ]
     }
   ],

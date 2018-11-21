@@ -58,6 +58,9 @@ namespace iwa_console
                 }
                 Console.ResetColor();
             }
+
+            Console.WriteLine("Press any key to exit");
+            Console.ReadKey();
         }
 
         private static async Task RunAsync()
