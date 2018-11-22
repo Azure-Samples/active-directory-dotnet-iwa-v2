@@ -5,7 +5,7 @@ platforms: dotnet
 level: 200
 client: .NET console app
 service: Microsoft Graph
-endpoint: AAD V2
+endpoint: AAD v2.0
 ---
 # Invoking an API protected by Azure AD with Integrated Windows Authentication, on a Windows domain jointed or AAD joined machine
 
@@ -28,33 +28,18 @@ If you would like to get started immediately, skip this section and jump to *How
 
 The application obtains tokens through Integrated Windows Authentication (Kerberos):
 
-## About the code
-
-The code for handling the token acquisition process is simple, as it boils down to calling the `AcquireTokenByIntegratedWindowsAuthAsync` method of `PublicClientApplication`. See the `GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync` method in `PublicAppUsingIntegratedWindowsAuthentication.cs`.
-
-```CSharp
-private async Task<AuthenticationResult> GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync(IEnumerable<string> scopes)
-{
-    AuthenticationResult result=null;
-    try
-    {
-        result = await App.AcquireTokenByIntegratedWindowsAuthAsync(scopes);
-    }
-    catch() 
-        ...
-        // error handling omited here (see sample for details)
-```
-
 ## How to run this sample
 
 To run this sample, you'll need:
 
 - [Visual Studio 2017](https://aka.ms/vsdownload)
 - An Internet connection
-- An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [How to get an Azure AD tenant](https://azure.microsoft.com/documentation/articles/active-directory-howto-tenant/)
+- An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [How to get an Azure AD tenant](https://azure.microsoft.com/en-us/documentation/articles/active-directory-howto-tenant/)
 - A user account in your Azure AD tenant. This sample will not work with a Microsoft account (formerly Windows Live account). Therefore, if you signed in to the [Azure portal](https://portal.azure.com) with a Microsoft account and have never created a user account in your directory before, you need to do that now.
 
 ### Step 1: Clone or download this repository
+
+From your shell or command line:
 
 ```Shell
 git clone https://github.com/Azure-Samples/active-directory-dotnet-iwa-v2.git
@@ -72,10 +57,19 @@ Open the solution in Visual Studio, restore the NuGet packages, select the proje
 
 When you run the sample, if you are running on a domain joined or AAD joined Windows machine, it will display your information as well as the information about your manager.
 
-### Optional: configure the sample as an app in your directory tenant
+### Step 2:(Optional): Configure the sample as an app in your directory tenant
 
-The instructions so far used the Azure AD entry for the app in a Microsoft test tenant: given that the app is multitenant, anybody can run the sample against that app entry.
+The instructions so far used the Azure AD entry for the app in a Microsoft test tenant: given that the app is multi-tenant, anybody can run the sample against that app registration.
 To register your project in your own Azure AD tenant, you can find instructions to manually provision the sample in your own tenant, so that you can exercise complete control on the app settings and behavior.
+
+There is one project in this sample. To register it, you can:
+
+- either follow the steps in the paragraphs below ([Step 2](#step-2--register-the-sample-with-your-azure-active-directory-tenant) and [Step 3](#step-3--configure-the-sample-to-use-your-azure-ad-tenant))
+- or use PowerShell scripts that:
+  - **automatically** create for you the Azure AD applications and related objects (passwords, permissions, dependencies)
+  - modify the Visual Studio projects' configuration files.
+
+If you want to use this automation, read the instructions in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
 
 #### Choose the Azure AD tenant where you want to create your applications
 
@@ -95,7 +89,7 @@ As a first step you'll need to:
    - Select **Register** to create the application.
 1. On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
 1. In the list of pages for the app, select **Manifest**, and:
-   - In the manifest editor, set the ``allowPublicClient`` property to **true** 
+   - In the manifest editor, set the ``allowPublicClient`` property to **true**
    - Select **Save** in the bar above the manifest editor.
 1. In the list of pages for the app, select **API permissions**
    - Click the **Add a permission** button and then,
@@ -104,15 +98,15 @@ As a first step you'll need to:
    - In the **Delegated permissions** section, ensure that the right permissions are checked: **User.Read**, **User.ReadBasic.All**. Use the search box if necessary.
    - Select the **Add permissions** button
 
-1. At this stage permissions are assigned correctly but the client app does not allow interaction. 
+1. At this stage permissions are assigned correctly but the client app does not allow interaction.
    Therefore no consent can be presented via a UI and accepted to use the service app. 
    Click the **Grant/revoke admin consent for {tenant}** button, and then select **Yes** when you are asked if you want to grant consent for the
    requested permissions for all account in the tenant.
    You need to be an Azure AD tenant admin to do this.
 
-#### Configure the sample to use your Azure AD tenant
+### Step 3:  Configure the sample to use your Azure AD tenant
 
-In the steps below, ClientID is the same as Application ID or AppId.
+In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 
 Open the solution in Visual Studio to configure the projects
 
@@ -122,9 +116,28 @@ Open the solution in Visual Studio to configure the projects
 1. Find the line where `clientId` is set and replace the existing value with the application ID (clientId) of the `iwa-console` application copied from the Azure portal.
 1. [optionally] Find the line where `Tenant` is set and replace the existing value with your tenant ID.
 
+Clean the solution, rebuild the solution, and start it in the debugger.
+
+## About the code
+
+The code for handling the token acquisition process is simple, as it boils down to calling the `AcquireTokenByIntegratedWindowsAuthAsync` method of `PublicClientApplication`. See the `GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync` method in `PublicAppUsingIntegratedWindowsAuthentication.cs`.
+
+```CSharp
+private async Task<AuthenticationResult> GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync(IEnumerable<string> scopes)
+{
+    AuthenticationResult result=null;
+    try
+    {
+        result = await App.AcquireTokenByIntegratedWindowsAuthAsync(scopes);
+    }
+    catch() 
+        ...
+        // error handling omited here (see sample for details)
+```
+
 ## Community Help and Support
 
-Use [Stack Overflow](http://stackoverflow.com/questions/tagged/adal) to get support from the community.
+Use [Stack Overflow](http://stackoverflow.com/questions/tagged/msal) to get support from the community.
 Ask your questions on Stack Overflow first and browse existing issues to see if someone has asked your question before.
 Make sure that your questions or comments are tagged with [`msal` `dotnet`].
 
