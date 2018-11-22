@@ -154,17 +154,20 @@ Function ConfigureApplications
    # Create the client AAD application
    Write-Host "Creating the AAD application (iwa-console)"
    $clientAadApplication = New-AzureADApplication -DisplayName "iwa-console" `
-                                                  -ReplyUrls "https://iwa-console" `
+                                                  -ReplyUrls "urn:ietf:wg:oauth:2.0:oob" `
                                                   -AvailableToOtherTenants $True `
                                                   -PublicClient $True
-
 
    $currentAppId = $clientAadApplication.AppId
    $clientServicePrincipal = New-AzureADServicePrincipal -AppId $currentAppId -Tags {WindowsAzureActiveDirectoryIntegratedApp}
 
-   # add the user running the script as an app owner
-   Add-AzureADApplicationOwner -ObjectId $clientAadApplication.ObjectId -RefObjectId $user.ObjectId
-   Write-Host "'$($user.UserPrincipalName)' added as an application owner to app '$($clientServicePrincipal.DisplayName)'"
+   # add the user running the script as an app owner if needed
+   $owner = Get-AzureADApplicationOwner -ObjectId $clientAadApplication.ObjectId
+   if ($owner -eq $null)
+   { 
+    Add-AzureADApplicationOwner -ObjectId $clientAadApplication.ObjectId -RefObjectId $user.ObjectId
+    Write-Host "'$($user.UserPrincipalName)' added as an application owner to app '$($clientServicePrincipal.DisplayName)'"
+   }
 
    Write-Host "Done creating the client application (iwa-console)"
 
@@ -194,7 +197,8 @@ Function ConfigureApplications
    Write-Host ""
    Write-Host "IMPORTANT: Think of completing the following manual step(s) in the Azure portal":
    Write-Host "- For 'client'"
-   Write-Host "  - Navigate to '$clientPortalUrl' and click on 'Grant admin consent for {tenant}'"
+   Write-Host "  - Navigate to '$clientPortalUrl'"
+   Write-Host "  - Navigate to the API permissions page and click on 'Grant admin consent for {tenant}'"
 
    Add-Content -Value "</tbody></table></body></html>" -Path createdApps.html  
 }
