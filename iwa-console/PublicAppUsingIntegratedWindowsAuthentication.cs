@@ -43,11 +43,11 @@ namespace iwa_console
         /// <remarks>
         /// For more information see https://aka.ms/msal-net-iwa
         /// </remarks>
-        public PublicAppUsingIntegratedWindowsAuthentication(PublicClientApplication app)
+        public PublicAppUsingIntegratedWindowsAuthentication(IPublicClientApplication app)
         {
             App = app;
         }
-        protected PublicClientApplication App { get; private set; }
+        protected IPublicClientApplication App { get; private set; }
 
         /// <summary>
         /// Acquires a token from the token cache, or Integrated Windows Authentication

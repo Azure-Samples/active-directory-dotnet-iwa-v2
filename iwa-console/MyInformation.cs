@@ -33,7 +33,7 @@ namespace iwa_console
 {
     public class MyInformation
     {
-        public MyInformation(PublicClientApplication app, HttpClient client)
+        public MyInformation(IPublicClientApplication app, HttpClient client)
         {
             tokenAcquisitionHelper = new PublicAppUsingIntegratedWindowsAuthentication(app);
             protectedApiCallHelper = new ProtectedApiCallHelper(client);
