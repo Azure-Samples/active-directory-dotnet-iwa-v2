@@ -63,7 +63,8 @@ namespace iwa_console
                 try
                 {
                     // Attempt to get a token from the cache (or refresh it silently if needed)
-                    result = await App.AcquireTokenSilentAsync(scopes, accounts.FirstOrDefault());
+                    result = await App.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
+                        .ExecuteAsync();
                 }
                 catch (MsalUiRequiredException)
                 {
@@ -89,7 +90,8 @@ namespace iwa_console
             AuthenticationResult result=null;
             try
             {
-                result = await App.AcquireTokenByIntegratedWindowsAuthAsync(scopes);
+                result = await App.AcquireTokenByIntegratedWindowsAuth(scopes)
+                    .ExecuteAsync();
             }
             catch (MsalUiRequiredException ex) when (ex.Message.Contains("AADSTS65001"))
             {

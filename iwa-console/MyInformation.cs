@@ -33,26 +33,29 @@ namespace iwa_console
 {
     public class MyInformation
     {
-        public MyInformation(IPublicClientApplication app, HttpClient client)
+        public MyInformation(IPublicClientApplication app, HttpClient client, string microsoftGraphBaseEndpoint)
         {
             tokenAcquisitionHelper = new PublicAppUsingIntegratedWindowsAuthentication(app);
             protectedApiCallHelper = new ProtectedApiCallHelper(client);
+            this.microsoftGraphBaseEndpoint = microsoftGraphBaseEndpoint;
         }
 
         protected PublicAppUsingIntegratedWindowsAuthentication tokenAcquisitionHelper;
 
         protected ProtectedApiCallHelper protectedApiCallHelper;
 
+        protected string microsoftGraphBaseEndpoint;
+
         /// <summary>
         /// Scopes to request access to the protected Web API (here Microsoft Graph)
         /// </summary>
-        private static string[] Scopes { get; set; } = new string[] { "User.Read", "User.ReadBasic.All"};
+        private static string[] Scopes { get; set; } = new string[] { "User.Read", "User.ReadBasic.All" };
 
         /// <summary>
         /// URLs of the protected Web APIs to call (here Microsoft Graph endpoints)
         /// </summary>
-        private static string WebApiUrlMe { get; set; } = "https://graph.microsoft.com/v1.0/me";
-        private static string WebApiUrlMyManager { get; set; } = "https://graph.microsoft.com/v1.0/me/manager";
+        private string WebApiUrlMe { get { return $"{microsoftGraphBaseEndpoint}/v1.0/me"; } }
+        private string WebApiUrlMyManager { get { return $"{microsoftGraphBaseEndpoint}/v1.0/me/manager"; } }
 
         /// <summary>
         /// Calls the Web API and displays its information

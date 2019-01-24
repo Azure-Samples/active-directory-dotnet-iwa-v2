@@ -40,23 +40,12 @@ namespace iwa_console
         {
             try
             {
-                RunAsync().Wait();
+                RunAsync().GetAwaiter().GetResult();
             }
             catch (Exception ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
-                var aggregateException = ex as AggregateException;
-                if (aggregateException !=null)
-                {
-                    foreach(Exception subEx in aggregateException.InnerExceptions)
-                    {
-                        Console.WriteLine(subEx.Message);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                Console.WriteLine(ex.Message);
                 Console.ResetColor();
             }
 
@@ -66,11 +55,11 @@ namespace iwa_console
 
         private static async Task RunAsync()
         {
-            PublicClientApplicationOptions config = AuthenticationConfig.ReadFromJsonFile("appsettings.json");
-            var app = PublicClientApplicationBuilder.CreateWithApplicationOptions(config).Build();
+            SampleConfiguration config = SampleConfiguration.ReadFromJsonFile("appsettings.json");
+            var app = PublicClientApplicationBuilder.CreateWithApplicationOptions(config.PublicClientApplicationOptions).Build();
             var httpClient = new HttpClient();
 
-            MyInformation myInformation = new MyInformation(app, httpClient);
+            MyInformation myInformation = new MyInformation(app, httpClient, config.MicrosoftGraphBaseEndpoint);
             await myInformation.DisplayMeAndMyManagerAsync();
         }
     }
