@@ -1,7 +1,8 @@
+
 ---
 services: active-directory
-author: jmprieur
 platforms: dotnet
+author: jmprieur
 level: 200
 client: .NET console app
 service: Microsoft Graph
@@ -9,24 +10,25 @@ endpoint: AAD v2.0
 ---
 # Invoking an API protected by Azure AD with Integrated Windows Authentication, on a Windows domain jointed or AAD joined machine
 
-[![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnet-iwa-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=0)
+![Build badge](https://identitydivision.visualstudio.com/_apis/public/build/definitions/a7934fdd-dcde-4492-a406-7fad6ac00e17/<BuildNumber>/badge)
 
 ## About this sample
 
 ### Overview
 
-This sample demonstrates how to use MSAL.NET from apps that run on a domain joined or AAD joined Windows machine. It enables these apps to:
+This sample demonstrates a .NET console app application calling The Microsoft Graph.
 
-- authenticate the user signed-in on the Windows machine
-- and call to a web API (in this case, the [Microsoft Graph](https://graph.microsoft.com))
+1. The .Net client .NET console app application uses the MicroSoft Authentication Library (MSAL) to obtain a JWT access token from Azure Active Directory (Azure AD):
+2. The access token is used as a bearer token to authenticate the user when calling the Microsoft Graph.
 
-![Topology](./ReadmeFiles/Topology.png)
+> Looking for previous versions of this code sample? Check out the tags on the [releases](../../releases) GitHub page.
 
-If you would like to get started immediately, skip this section and jump to *How To Run The Sample*.
+![Overview](./ReadmeFiles/topology.png)
 
 ### Scenario
 
-The application obtains tokens through Integrated Windows Authentication (Kerberos):
+> Describe the scenario
+> Insert a screen copy of the client
 
 ## How to run this sample
 
@@ -37,7 +39,7 @@ To run this sample, you'll need:
 - An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [How to get an Azure AD tenant](https://azure.microsoft.com/en-us/documentation/articles/active-directory-howto-tenant/)
 - A user account in your Azure AD tenant. This sample will not work with a Microsoft account (formerly Windows Live account). Therefore, if you signed in to the [Azure portal](https://portal.azure.com) with a Microsoft account and have never created a user account in your directory before, you need to do that now.
 
-### Step 1: Clone or download this repository
+### Step 1:  Clone or download this repository
 
 From your shell or command line:
 
@@ -47,20 +49,9 @@ git clone https://github.com/Azure-Samples/active-directory-dotnet-iwa-v2.git
 
 or download and exact the repository .zip file.
 
-> Given that the name of the sample is pretty long, and so are the name of the referenced NuGet pacakges, you might want to clone it in a folder close to the root of your hard drive, to avoid file size limitations on Windows.
+> Given that the name of the sample is pretty long, and so are the name of the referenced NuGet packages, you might want to clone it in a folder close to the root of your hard drive, to avoid file size limitations on Windows.
 
-### Step 2: Run the sample
-
-Open the solution in Visual Studio, restore the NuGet packages, select the project, and start it in the debugger.
-
-#### Operating the sample
-
-When you run the sample, if you are running on a domain joined or AAD joined Windows machine, it will display your information as well as the information about your manager.
-
-### Step 2:(Optional): Configure the sample as an app in your directory tenant
-
-The instructions so far used the Azure AD entry for the app in a Microsoft test tenant: given that the app is multi-tenant, anybody can run the sample against that app registration.
-To register your project in your own Azure AD tenant, you can find instructions to manually provision the sample in your own tenant, so that you can exercise complete control on the app settings and behavior.
+### Step 2:  Register the sample application with your Azure Active Directory tenant
 
 There is one project in this sample. To register it, you can:
 
@@ -99,7 +90,8 @@ As a first step you'll need to:
 1. When the **Register an application page** appears, enter your application's registration information:
    - In the **Name** section, enter a meaningful application name that will be displayed to users of the app, for example `iwa-console`.
    - In the **Supported account types** section, select **Accounts in any organizational directory**.
-   - Select **Register** to create the application.
+    > Note that if there are more than one redirect URIs, you'd need to add them from the **Authentication** tab later after the app has been created succesfully. 
+1. Select **Register** to create the application.
 1. On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
 1. In the list of pages for the app, select **Manifest**, and:
    - In the manifest editor, set the ``allowPublicClient`` property to **true** 
@@ -128,33 +120,19 @@ Open the solution in Visual Studio to configure the projects
 > Note: if you used the setup scripts, the changes below will have been applied for you
 
 1. Open the `iwa-console\appsettings.json` file
-1. Find the line where `clientId` is set and replace the existing value with the application ID (clientId) of the `iwa-console` application copied from the Azure portal.
-1. [optionally] Find the line where `Tenant` is set and replace the existing value with your tenant ID.
+1. Find the app key `ClientId` and replace the existing value with the application ID (clientId) of the `iwa-console` application copied from the Azure portal.
 
-Clean the solution, rebuild the solution, and start it in the debugger.
+### Step 4: Run the sample
 
-## About the code
+Clean the solution, rebuild the solution, and run it.  You might want to go into the solution properties and set both projects as startup projects, with the service project starting first.
 
-The code for handling the token acquisition process is simple, as it boils down to calling the `AcquireTokenByIntegratedWindowsAuthAsync` method of `PublicClientApplication`. See the `GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync` method in `PublicAppUsingIntegratedWindowsAuthentication.cs`.
-
-```CSharp
-private async Task<AuthenticationResult> GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync(IEnumerable<string> scopes)
-{
-    AuthenticationResult result=null;
-    try
-    {
-        result = await App.AcquireTokenByIntegratedWindowsAuthAsync(scopes);
-    }
-    catch() 
-        ...
-        // error handling omited here (see sample for details)
-```
+> Explain how to Explore the sample.
 
 ## Community Help and Support
 
 Use [Stack Overflow](http://stackoverflow.com/questions/tagged/msal) to get support from the community.
 Ask your questions on Stack Overflow first and browse existing issues to see if someone has asked your question before.
-Make sure that your questions or comments are tagged with [`msal` `dotnet`].
+Make sure that your questions or comments are tagged with [`adal` `msal` `dotnet`].
 
 If you find a bug in the sample, please raise the issue on [GitHub Issues](../../issues).
 
@@ -168,7 +146,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ## More information
 
-For more information, see MSAL.NET's conceptual documentation:
+For more information, see ADAL.NET's conceptual documentation:
+
+> Provide links to the flows from the conceptual documentation and remove some that do not apply, like either keep ADAL or MSAL related links depending on the sample
+> for instance:
+- [Microsoft identity platform (Azure Active Directory for developers)](https://docs.microsoft.com/en-us/azure/active-directory/develop/)
 - [Quickstart: Register an application with the Microsoft identity platform (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
 - [Quickstart: Configure a client application to access web APIs (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
 
@@ -176,9 +158,19 @@ For more information, see MSAL.NET's conceptual documentation:
 - [Understand user and admin consent](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-convert-app-to-be-multi-tenant#understand-user-and-admin-consent)
 - [Application and service principal objects in Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
 
-- [Integrated Windows Authentication](https://aka.ms/msal-net-iwa)
-- [Customizing Token cache serialization](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/token-cache-serialization) (was not done in this sample, but you might want to add a serialized cache)
+<-- 
+   Uncomment for a V1 sample 
+- [ADAL.NET's conceptual documentation](https://github.com/AzureAD/azure-activedirectory-library-for-dotnet/wiki)
+- [Customizing Token cache serialization](https://github.com/AzureAD/azure-activedirectory-library-for-dotnet/wiki/Token-cache-serialization)
+- [Recommended pattern to acquire a token](https://github.com/AzureAD/azure-activedirectory-library-for-dotnet/wiki/AcquireTokenSilentAsync-using-a-cached-token#recommended-pattern-to-acquire-a-token)
+- [Acquiring tokens interactively in public client applications](https://github.com/AzureAD/azure-activedirectory-library-for-dotnet/wiki/Acquiring-tokens-interactively---Public-client-application-flows)
+-->
 
-For more information about the Azure AD v2.0 endpoint see:
+- [MSAL.NET's conceptual documentation](https://aka.ms/msal-net)
+- [Customizing Token cache serialization](https://aka.ms/msal-net-token-cache-serialization)
+- [Types of Applications](https://aka.ms/msal-net-client-applications)
+- [Acquiring Tokens](https://aka.ms/msal-net-acquiring-tokens)
 
-- [https://aka.ms/aadv2](https://aka.ms/aadv2)
+- [National Clouds](https://docs.microsoft.com/en-us/azure/active-directory/develop/authentication-national-cloud#app-registration-endpoints)
+
+For more information about how OAuth 2.0 protocols work in this scenario and other scenarios, see [Authentication Scenarios for Azure AD](http://go.microsoft.com/fwlink/?LinkId=394414).
