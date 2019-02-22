@@ -8,8 +8,7 @@ service: Microsoft Graph
 endpoint: AAD v2.0
 ---
 # Invoking an API protected by Azure AD with Integrated Windows Authentication, on a Windows domain jointed or AAD joined machine
-
-[![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnet-iwa-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=0)
+[![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnet-iwa-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=692)
 
 ## About this sample
 
