@@ -37,14 +37,12 @@ namespace iwa_console
         {
             tokenAcquisitionHelper = new PublicAppUsingIntegratedWindowsAuthentication(app);
             protectedApiCallHelper = new ProtectedApiCallHelper(client);
-            this.microsoftGraphBaseEndpoint = microsoftGraphBaseEndpoint;
+            this.MicrosoftGraphBaseEndpoint = microsoftGraphBaseEndpoint;
         }
 
         protected PublicAppUsingIntegratedWindowsAuthentication tokenAcquisitionHelper;
 
         protected ProtectedApiCallHelper protectedApiCallHelper;
-
-        protected string microsoftGraphBaseEndpoint;
 
         /// <summary>
         /// Scopes to request access to the protected Web API (here Microsoft Graph)
@@ -52,10 +50,15 @@ namespace iwa_console
         private static string[] Scopes { get; set; } = new string[] { "User.Read", "User.ReadBasic.All" };
 
         /// <summary>
+        /// Base endpoint for Microsoft Graph
+        /// </summary>
+        private string MicrosoftGraphBaseEndpoint { get; set; }
+
+        /// <summary>
         /// URLs of the protected Web APIs to call (here Microsoft Graph endpoints)
         /// </summary>
-        private string WebApiUrlMe { get { return $"{microsoftGraphBaseEndpoint}/v1.0/me"; } }
-        private string WebApiUrlMyManager { get { return $"{microsoftGraphBaseEndpoint}/v1.0/me/manager"; } }
+        private string WebApiUrlMe { get { return $"{MicrosoftGraphBaseEndpoint}/v1.0/me"; } }
+        private string WebApiUrlMyManager { get { return $"{MicrosoftGraphBaseEndpoint}/v1.0/me/manager"; } }
 
         /// <summary>
         /// Calls the Web API and displays its information
