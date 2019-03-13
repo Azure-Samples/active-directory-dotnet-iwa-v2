@@ -43,11 +43,11 @@ namespace iwa_console
         /// <remarks>
         /// For more information see https://aka.ms/msal-net-iwa
         /// </remarks>
-        public PublicAppUsingIntegratedWindowsAuthentication(PublicClientApplication app)
+        public PublicAppUsingIntegratedWindowsAuthentication(IPublicClientApplication app)
         {
             App = app;
         }
-        protected PublicClientApplication App { get; private set; }
+        protected IPublicClientApplication App { get; private set; }
 
         /// <summary>
         /// Acquires a token from the token cache, or Integrated Windows Authentication
@@ -63,7 +63,8 @@ namespace iwa_console
                 try
                 {
                     // Attempt to get a token from the cache (or refresh it silently if needed)
-                    result = await App.AcquireTokenSilentAsync(scopes, accounts.FirstOrDefault());
+                    result = await App.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
+                        .ExecuteAsync();
                 }
                 catch (MsalUiRequiredException)
                 {
@@ -89,7 +90,8 @@ namespace iwa_console
             AuthenticationResult result=null;
             try
             {
-                result = await App.AcquireTokenByIntegratedWindowsAuthAsync(scopes);
+                result = await App.AcquireTokenByIntegratedWindowsAuth(scopes)
+                    .ExecuteAsync();
             }
             catch (MsalUiRequiredException ex) when (ex.Message.Contains("AADSTS65001"))
             {
