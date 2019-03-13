@@ -57,8 +57,7 @@ namespace iwa_console
             SampleConfiguration config = SampleConfiguration.ReadFromJsonFile("appsettings.json");
             var appConfig = config.PublicClientApplicationOptions;
             var app = PublicClientApplicationBuilder.CreateWithApplicationOptions(appConfig)
-                                                     // work around to MSAL.NET bug #969
-                                                    .WithAuthority(appConfig.AzureCloudInstance, AadAuthorityAudience.AzureAdMultipleOrgs)
+                                                    .WithAuthority(appConfig.AzureCloudInstance, AadAuthorityAudience.AzureAdMultipleOrgs)  // work around to MSAL.NET bug #969
                                                     .Build();
             var httpClient = new HttpClient();
 
