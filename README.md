@@ -8,8 +8,7 @@ service: Microsoft Graph
 endpoint: AAD v2.0
 ---
 # Invoking an API protected by Azure AD with Integrated Windows Authentication, on a Windows domain jointed or AAD joined machine
-
-[![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnet-iwa-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=0)
+[![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnet-iwa-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=692)
 
 ## About this sample
 
@@ -64,20 +63,33 @@ To register your project in your own Azure AD tenant, you can find instructions 
 
 There is one project in this sample. To register it, you can:
 
-- either follow the steps in the paragraphs below ([Step 2](#step-2--register-the-sample-with-your-azure-active-directory-tenant) and [Step 3](#step-3--configure-the-sample-to-use-your-azure-ad-tenant))
+- either follow the steps [Step 2: Register the sample with your Azure Active Directory tenant](#step-2-register-the-sample-with-your-azure-active-directory-tenant) and [Step 3:  Configure the sample to use your Azure AD tenant](#choose-the-azure-ad-tenant-where-you-want-to-create-your-applications)
 - or use PowerShell scripts that:
-  - **automatically** create for you the Azure AD applications and related objects (passwords, permissions, dependencies)
+  - **automatically** creates the Azure AD applications and related objects (passwords, permissions, dependencies) for you
   - modify the Visual Studio projects' configuration files.
 
-If you want to use this automation, read the instructions in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
+If you want to use this automation:
+1. On Windows run PowerShell and navigate to the root of the cloned directory
+1. In PowerShell run:
+   ```PowerShell
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+   ```
+1. Run the script to create your Azure AD application and configure the code of the sample application accordinly. 
+   ```PowerShell
+   .\AppCreationScripts\Configure.ps1
+   ```
+   > Other ways of running the scripts are described in [App Creation Scripts](./AppCreationScripts/AppCreationScripts.md)
+
+1. Open the Visual Studio solution and click start
+
+If ou don't want to use this automation, follow the steps below
 
 #### Choose the Azure AD tenant where you want to create your applications
 
 As a first step you'll need to:
 
 1. Sign in to the [Azure portal](https://portal.azure.com) using either a work or school account or a personal Microsoft account.
-1. If your account gives you access to more than one tenant, select your account in the top right corner, and set your portal session to the desired Azure AD tenant
-   (using **Switch Directory**).
+1. If your account is present in more than one Azure AD tenant, select `Directory + Subscription` at the top right corner in the menu on top of the page, and switch your portal session to the desired Azure AD tenant.   
 1. In the left-hand navigation pane, select the **Azure Active Directory** service, and then select **App registrations (Preview)**.
 
 #### Register the client app (iwa-console)
@@ -89,7 +101,7 @@ As a first step you'll need to:
    - Select **Register** to create the application.
 1. On the app **Overview** page, find the **Application (client) ID** value and record it for later. You'll need it to configure the Visual Studio configuration file for this project.
 1. In the list of pages for the app, select **Manifest**, and:
-   - In the manifest editor, set the ``allowPublicClient`` property to **true**
+   - In the manifest editor, set the ``allowPublicClient`` property to **true** 
    - Select **Save** in the bar above the manifest editor.
 1. In the list of pages for the app, select **API permissions**
    - Click the **Add a permission** button and then,
@@ -98,7 +110,7 @@ As a first step you'll need to:
    - In the **Delegated permissions** section, ensure that the right permissions are checked: **User.Read**, **User.ReadBasic.All**. Use the search box if necessary.
    - Select the **Add permissions** button
 
-1. At this stage permissions are assigned correctly but the client app does not allow interaction.
+1. At this stage permissions are assigned correctly but the client app does not allow interaction. 
    Therefore no consent can be presented via a UI and accepted to use the service app. 
    Click the **Grant/revoke admin consent for {tenant}** button, and then select **Yes** when you are asked if you want to grant consent for the
    requested permissions for all account in the tenant.
@@ -111,6 +123,8 @@ In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 Open the solution in Visual Studio to configure the projects
 
 #### Configure the client project
+
+> Note: if you used the setup scripts, the changes below will have been applied for you
 
 1. Open the `iwa-console\appsettings.json` file
 1. Find the line where `clientId` is set and replace the existing value with the application ID (clientId) of the `iwa-console` application copied from the Azure portal.
@@ -156,6 +170,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information, see MSAL.NET's conceptual documentation:
 - [Quickstart: Register an application with the Microsoft identity platform (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
 - [Quickstart: Configure a client application to access web APIs (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
+
+- [Understanding Azure AD application consent experiences](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience)
+- [Understand user and admin consent](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-convert-app-to-be-multi-tenant#understand-user-and-admin-consent)
+- [Application and service principal objects in Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
 
 - [Integrated Windows Authentication](https://aka.ms/msal-net-iwa)
 - [Customizing Token cache serialization](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/token-cache-serialization) (was not done in this sample, but you might want to add a serialized cache)
