@@ -22,7 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.AppConfig;
 using System;
 using System.Net.Http;
@@ -56,7 +55,11 @@ namespace iwa_console
         private static async Task RunAsync()
         {
             SampleConfiguration config = SampleConfiguration.ReadFromJsonFile("appsettings.json");
-            var app = PublicClientApplicationBuilder.CreateWithApplicationOptions(config.PublicClientApplicationOptions).Build();
+            var appConfig = config.PublicClientApplicationOptions;
+            var app = PublicClientApplicationBuilder.CreateWithApplicationOptions(appConfig)
+                                                     // work around to MSAL.NET bug #969
+                                                    .WithAuthority(appConfig.AzureCloudInstance, AadAuthorityAudience.AzureAdMultipleOrgs)
+                                                    .Build();
             var httpClient = new HttpClient();
 
             MyInformation myInformation = new MyInformation(app, httpClient, config.MicrosoftGraphBaseEndpoint);
