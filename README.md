@@ -7,7 +7,7 @@ client: .NET console app
 service: Microsoft Graph
 endpoint: AAD v2.0
 ---
-# Invoking an API protected by Azure AD with Integrated Windows Authentication, on a Windows domain jointed or AAD joined machine
+# Invoking an API protected by Azure AD with Integrated Windows Authentication, on a Windows domain joined or AAD joined machine
 [![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnet-iwa-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=692)
 
 ## About this sample
@@ -74,7 +74,7 @@ If you want to use this automation:
    ```PowerShell
    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
    ```
-1. Run the script to create your Azure AD application and configure the code of the sample application accordinly. 
+1. Run the script to create your Azure AD application and configure the code of the sample application accordingly. 
    ```PowerShell
    .\AppCreationScripts\Configure.ps1
    ```
@@ -82,7 +82,7 @@ If you want to use this automation:
 
 1. Open the Visual Studio solution and click start
 
-If ou don't want to use this automation, follow the steps below
+If you don't want to use this automation, follow the steps below
 
 #### Choose the Azure AD tenant where you want to create your applications
 
@@ -146,7 +146,7 @@ private async Task<AuthenticationResult> GetTokenForWebApiUsingIntegratedWindows
     }
     catch() 
         ...
-        // error handling omited here (see sample for details)
+        // error handling omitted here (see sample for details)
 ```
 
 ## Community Help and Support
