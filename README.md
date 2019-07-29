@@ -5,9 +5,9 @@ platforms: dotnet
 level: 200
 client: .NET console app
 service: Microsoft Graph
-endpoint: AAD v2.0
+endpoint: Microsoft identity platform
 ---
-# Invoking an API protected by Azure AD with Integrated Windows Authentication, on a Windows domain joined or AAD joined machine
+# Invoking an API protected by Microsoft identity platform with Integrated Windows Authentication, on a Windows domain joined or AAD joined machine
 [![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnet-iwa-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=692)
 
 ## About this sample
@@ -168,8 +168,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 ## More information
 
 For more information, see MSAL.NET's conceptual documentation:
-- [Quickstart: Register an application with the Microsoft identity platform (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
-- [Quickstart: Configure a client application to access web APIs (Preview)](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
+- [Quickstart: Register an application with the Microsoft identity platform](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
+- [Quickstart: Configure a client application to access web APIs](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
 
 - [Understanding Azure AD application consent experiences](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience)
 - [Understand user and admin consent](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-convert-app-to-be-multi-tenant#understand-user-and-admin-consent)
@@ -178,6 +178,6 @@ For more information, see MSAL.NET's conceptual documentation:
 - [Integrated Windows Authentication](https://aka.ms/msal-net-iwa)
 - [Customizing Token cache serialization](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/token-cache-serialization) (was not done in this sample, but you might want to add a serialized cache)
 
-For more information about the Azure AD v2.0 endpoint see:
+For more information about the Microsoft identity platform endpoint see:
 
 - [https://aka.ms/aadv2](https://aka.ms/aadv2)
