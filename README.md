@@ -1,20 +1,12 @@
 ---
-services: active-directory
-author: jmprieur
-platforms: dotnet
-level: 200
-client: .NET console app
-service: Microsoft Graph
-endpoint: Microsoft identity platform
 page_type: sample
 languages:
-  - csharp  
+- csharp
+- powershell
 products:
-  - azure
-  - azure-active-directory  
-  - dotnet
-  - office-ms-graph
-description: "This sample demonstrates how to use MSAL.NET from apps that run on a domain joined or AAD joined Windows machine. It enables these apps to authenticate the user signed-in on the Windows machine and call a web API."
+- azure
+description: "This sample demonstrates how to use MSAL.NET from apps that run on a domain joined or AAD joined Windows machine."
+urlFragment: active-directory-dotnet-iwa-v2
 ---
 
 # Invoking an API protected by Microsoft identity platform with Integrated Windows Authentication, on a Windows domain joined or AAD joined machine
