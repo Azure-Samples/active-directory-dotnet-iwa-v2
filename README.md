@@ -4,7 +4,7 @@ languages:
 - csharp
 - powershell
 products:
-- azure
+- azure-active-directory
 description: "This sample demonstrates how to use MSAL.NET from apps that run on a domain joined or AAD joined Windows machine."
 urlFragment: active-directory-dotnet-iwa-v2
 ---
