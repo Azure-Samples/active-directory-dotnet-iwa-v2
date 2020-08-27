@@ -37,7 +37,7 @@ namespace iwa_console
         {
             tokenAcquisitionHelper = new PublicAppUsingIntegratedWindowsAuthentication(app);
             protectedApiCallHelper = new ProtectedApiCallHelper(client);
-            this.MicrosoftGraphBaseEndpoint = microsoftGraphBaseEndpoint;
+            MicrosoftGraphBaseEndpoint = microsoftGraphBaseEndpoint;
         }
 
         protected PublicAppUsingIntegratedWindowsAuthentication tokenAcquisitionHelper;

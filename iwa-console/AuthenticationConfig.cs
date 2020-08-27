@@ -58,7 +58,7 @@ namespace iwa_console
             // .NET configuration
             IConfigurationRoot Configuration;
             var builder = new ConfigurationBuilder()
-             .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
+            .SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location))
             .AddJsonFile(path);
             Configuration = builder.Build();
 
