@@ -87,7 +87,7 @@ namespace iwa_console
         /// <returns>An authentication result, or null if the user canceled sign-in</returns>
         private async Task<AuthenticationResult> GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync(IEnumerable<string> scopes)
         {
-            AuthenticationResult result=null;
+            AuthenticationResult result;
             try
             {
                 result = await App.AcquireTokenByIntegratedWindowsAuth(scopes)
