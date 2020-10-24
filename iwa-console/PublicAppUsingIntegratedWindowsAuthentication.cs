@@ -1,26 +1,5 @@
-﻿/*
- The MIT License (MIT)
-
-Copyright (c) 2015 Microsoft Corporation
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using Microsoft.Identity.Client;
 using System;
@@ -82,7 +61,7 @@ namespace iwa_console
 
         /// <summary>
         /// Gets an access token so that the application accesses the web api in the name of the user
-        /// who is signed-in in Windows (for a domain joined or AAD joined machine)
+        /// who is signed-in with Windows (for a domain joined or AAD joined machine)
         /// </summary>
         /// <returns>An authentication result, or null if the user canceled sign-in</returns>
         private async Task<AuthenticationResult> GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync(IEnumerable<string> scopes)
@@ -111,7 +90,7 @@ namespace iwa_console
 
                 // MsalServiceException: AADSTS90010: The grant type is not supported over the /common or /consumers endpoints. Please use the /organizations or tenant-specific endpoint.
                 // you used common.
-                // Mitigation: as explained in the message from Azure AD, the authoriy needs to be tenanted or otherwise organizations
+                // Mitigation: as explained in the message from Azure AD, the authority needs to be tenanted or otherwise organizations
 
                 // MsalServiceException: AADSTS70002: The request body must contain the following parameter: 'client_secret or client_assertion'.
                 // Explanation: this can happen if your application was not registered as a public client application in Azure AD 
