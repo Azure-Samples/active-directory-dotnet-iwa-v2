@@ -29,11 +29,11 @@ namespace iwa_console
 
 
         /// <summary>
-        /// Calls the protected Web API and processes the result
+        /// Calls the protected web API and processes the result
         /// </summary>
-        /// <param name="webApiUrl">Url of the Web API to call (supposed to return Json)</param>
-        /// <param name="accessToken">Access token used as a bearer security token to call the Web API</param>
-        /// <param name="processResult">Callback used to process the result of the call to the Web API</param>
+        /// <param name="webApiUrl">URL of the web API to call (supposed to return Json)</param>
+        /// <param name="accessToken">Access token used as a bearer security token to call the web API</param>
+        /// <param name="processResult">Callback used to process the result of the call to the web API</param>
         public async Task CallWebApiAndProcessResultAsync(string webApiUrl, string accessToken, Action<JObject> processResult)
         {
             if (!string.IsNullOrEmpty(accessToken))
@@ -56,7 +56,7 @@ namespace iwa_console
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Failed to call the Web Api: {response.StatusCode}");
+                    Console.WriteLine($"Failed to call the web API: {response.StatusCode}");
                     string content = await response.Content.ReadAsStringAsync();
                     Console.WriteLine($"Content: {content}");
                 }

@@ -24,7 +24,7 @@ namespace iwa_console
         protected ProtectedApiCallHelper protectedApiCallHelper;
 
         /// <summary>
-        /// Scopes to request access to the protected Web API (here Microsoft Graph)
+        /// Scopes to request access to the protected web API (here Microsoft Graph)
         /// </summary>
         private static string[] Scopes { get; set; } = new string[] { "User.Read", "User.ReadBasic.All" };
 
@@ -34,13 +34,13 @@ namespace iwa_console
         private string MicrosoftGraphBaseEndpoint { get; set; }
 
         /// <summary>
-        /// URLs of the protected Web APIs to call (here Microsoft Graph endpoints)
+        /// URLs of the protected web APIs to call (here Microsoft Graph endpoints)
         /// </summary>
         private string WebApiUrlMe { get { return $"{MicrosoftGraphBaseEndpoint}/v1.0/me"; } }
         private string WebApiUrlMyManager { get { return $"{MicrosoftGraphBaseEndpoint}/v1.0/me/manager"; } }
 
         /// <summary>
-        /// Calls the Web API and displays its information
+        /// Calls the web API and displays its information
         /// </summary>
         /// <returns></returns>
         public async Task DisplayMeAndMyManagerAsync()
@@ -72,7 +72,7 @@ namespace iwa_console
         }
 
         /// <summary>
-        /// Display the result of the Web API call
+        /// Display the result of the web API call
         /// </summary>
         /// <param name="result">Object to display</param>
         private static void Display(JObject result)

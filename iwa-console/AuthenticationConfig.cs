@@ -49,8 +49,5 @@ namespace iwa_console
             return config;
         }
     }
-
-
-
 }
 
