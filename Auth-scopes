@@ -1,0 +1,10 @@
+private async Task<AuthenticationResult> GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync(IEnumerable<string> scopes)
+{
+    AuthenticationResult result=null;
+    try
+    {
+        result = await App.AcquireTokenByIntegratedWindowsAuthAsync(scopes);
+    }
+    catch() 
+        ...
+        // error handling omitted here (see sample for details)
