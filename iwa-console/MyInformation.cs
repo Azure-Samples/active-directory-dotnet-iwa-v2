@@ -45,7 +45,7 @@ namespace iwa_console
         /// <returns></returns>
         public async Task DisplayMeAndMyManagerAsync()
         {
-            AuthenticationResult authenticationResult = await tokenAcquisitionHelper.AcquireATokenFromCacheOrIntegratedWindowwAuthenticationAsync(Scopes);
+            AuthenticationResult authenticationResult = await tokenAcquisitionHelper.AcquireTokenFromCacheOrIntegratedWindowAuthenticationAsync(Scopes);
             if (authenticationResult != null)
             {
                 DisplaySignedInAccount(authenticationResult.Account);
