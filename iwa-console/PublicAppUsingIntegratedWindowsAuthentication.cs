@@ -32,7 +32,7 @@ namespace iwa_console
         /// Acquires a token from the token cache, or Integrated Windows Authentication
         /// </summary>
         /// <returns>An AuthenticationResult if the user successfully signed-in, or otherwise <c>null</c></returns>
-        public async Task<AuthenticationResult> AcquireATokenFromCacheOrIntegratedWindowwAuthenticationAsync(IEnumerable<String> scopes)
+        public async Task<AuthenticationResult> AcquireTokenFromCacheOrIntegratedWindowAuthenticationAsync(IEnumerable<String> scopes)
         {
             AuthenticationResult result = null;
             var accounts = await App.GetAccountsAsync();
