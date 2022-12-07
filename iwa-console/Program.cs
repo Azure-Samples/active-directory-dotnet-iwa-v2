@@ -47,22 +47,21 @@ namespace iwa_console
 
            while (true)
            {
-                Console.WriteLine("Sign user out? [y/n]");
-                var input = Console.ReadLine().ToLower();
+                Console.WriteLine("\nSign user out? [y/n]");
+                var input = Console.ReadKey();
 
-                if (string.IsNullOrEmpty(input) || (input[0] != 'y' && input[0] != 'n'))
-                {
-                    continue;
-                }
-
-                if (input[0] == 'y')
+                if (input.KeyChar == 'y')
                 {
                     msalClientHelper.SignOutUser();
-                    Console.WriteLine("User signed-out successfully.");
+                    Console.WriteLine("\nUser signed-out successfully.");
+                    return;
                 }
 
-                Console.WriteLine("User is not signed-out and credentials are still cached.");
-                return;
+                if (input.KeyChar == 'n')
+                {
+                    Console.WriteLine("\nUser is not signed-out and credentials are still cached.");
+                    return;
+                }
            }
         }
     }
