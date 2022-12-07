@@ -30,14 +30,6 @@ namespace iwa_console.MSAL
         public AuthenticationResult AuthResult { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating whether this instance of PublicClientApp was initialized with a broker .
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if this instance is broker initialized; otherwise, <c>false</c>.
-        /// </value>
-        public bool IsBrokerInitialized { get; private set; }
-
-        /// <summary>
         /// Gets the MSAL public client application instance.
         /// </summary>
         /// <value>
@@ -46,6 +38,20 @@ namespace iwa_console.MSAL
         public IPublicClientApplication PublicClientApplication { get; private set; }
 
         private PublicClientApplicationBuilder PublicClientApplicationBuilder;
+
+        // Token Caching setup - Mac
+        public static readonly string KeyChainServiceName = "Contoso.MyProduct";
+
+        public static readonly string KeyChainAccountName = "MSALCache";
+
+        // Token Caching setup - Linux
+        public static readonly string LinuxKeyRingSchema = "com.contoso.msaltokencache";
+
+        public static readonly string LinuxKeyRingCollection = MsalCacheHelper.LinuxKeyRingDefaultCollection;
+        public static readonly string LinuxKeyRingLabel = "MSAL token cache for Contoso.";
+
+        public static readonly KeyValuePair<string, string> LinuxKeyRingAttr1 = new KeyValuePair<string, string>("Version", "1");
+        public static readonly KeyValuePair<string, string> LinuxKeyRingAttr2 = new KeyValuePair<string, string>("ProductGroup", "Contoso");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MSALClientHelper"/> class.
@@ -73,32 +79,30 @@ namespace iwa_console.MSAL
         /// <summary>
         /// Initializes the public client application of MSAL.NET with the required information to correctly authenticate the user.
         /// </summary>
-        /// <returns></returns>
-        public async Task<IAccount> InitializePublicClientAppAsync()
-        {
-            // Initialize the MSAL library by building a public client application
-            this.PublicClientApplication = this.PublicClientApplicationBuilder.Build();
-
-            await AttachTokenCache();
-            return await FetchSignedInUserFromCache().ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Initializes the public client application of MSAL.NET with the required information to correctly authenticate the user.
-        /// </summary>
         /// <returns>An IAccount of an already signed-in user (if available)</returns>
-        public async Task<IAccount> InitializePublicClientAppForWAMBrokerAsync(IntPtr? handle)
+        public async Task InitializePublicClientAppForWAMBrokerAsync(IntPtr? handle)
         {
             // Initialize the MSAL library by building a public client application for authenticating using WAM
             this.PublicClientApplication = this.PublicClientApplicationBuilder
                     .WithBrokerPreview(true)
-                    .WithParentActivityOrWindow(() => { return handle.Value; })                                     // Specify Window handle - (required for WAM).
+                    .WithParentActivityOrWindow(() => handle.Value) // Specify Window handle - (required for WAM).
                     .Build();
 
-            this.IsBrokerInitialized = true;
+            // Cache configuration and hook-up to public application. Refer to https://github.com/AzureAD/microsoft-authentication-extensions-for-dotnet/wiki/Cross-platform-Token-Cache#configuring-the-token-cache
+            var storageProperties = new StorageCreationPropertiesBuilder(AzureADConfig.CacheFileName, AzureADConfig.CacheDir)
+                 .WithLinuxKeyring(
+                    LinuxKeyRingSchema,
+                    LinuxKeyRingCollection,
+                    LinuxKeyRingLabel,
+                    LinuxKeyRingAttr1,
+                    LinuxKeyRingAttr2)
+                .WithMacKeyChain(
+                    KeyChainServiceName,
+                    KeyChainAccountName)
+                .Build();
 
-            await AttachTokenCache();
-            return await FetchSignedInUserFromCache().ConfigureAwait(false);
+            var msalcachehelper = await MsalCacheHelper.CreateAsync(storageProperties);
+            msalcachehelper.RegisterCache(this.PublicClientApplication.UserTokenCache);
         }
 
         /// <summary>
@@ -127,28 +131,8 @@ namespace iwa_console.MSAL
 
             try
             {
-                // 1. Try to sign-in the previously signed-in account
-                if (existingUser != null)
-                {
-                    this.AuthResult = await this.PublicClientApplication.AcquireTokenSilent(scopes, existingUser)
-                        .ExecuteAsync().ConfigureAwait(false);
-                }
-                else
-                {
-                    if (this.IsBrokerInitialized)
-                    {
-                        Console.WriteLine("No accounts found in the cache. Trying Window's default account.");
-
-                        this.AuthResult = await this.PublicClientApplication
-                            .AcquireTokenSilent(scopes, Microsoft.Identity.Client.PublicClientApplication.OperatingSystemAccount)
-                            .ExecuteAsync()
-                            .ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        this.AuthResult = await SignInUserInteractivelyAsync(scopes);
-                    }
-                }
+                this.AuthResult = await this.PublicClientApplication.AcquireTokenSilent(scopes, existingUser)
+                   .ExecuteAsync().ConfigureAwait(false);
             }
             catch (MsalUiRequiredException ex)
             {

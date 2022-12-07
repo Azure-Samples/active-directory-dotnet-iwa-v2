@@ -16,24 +16,7 @@ namespace iwa_console
     /// </summary>
     class Program
     {
-        static void Main(string[] args)
-        {
-            try
-            {
-                RunAsync().GetAwaiter().GetResult();
-            }
-            catch (Exception ex)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(ex.Message);
-                Console.ResetColor();
-            }
-
-            Console.WriteLine("Press any key to exit");
-            Console.ReadKey();
-        }
-
-        private static async Task RunAsync()
+        static async Task Main(string[] args)
         {
             // Using appsettings.json as our configuration settings and utilizing IOptions pattern - https://learn.microsoft.com/dotnet/core/extensions/options
             var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
