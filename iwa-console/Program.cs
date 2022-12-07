@@ -44,6 +44,26 @@ namespace iwa_console
             Console.WriteLine($"Email:\n{ logedInUser.Mail ?? "Value not set"}\n");
             Console.WriteLine($"Mobile phone:\n{ logedInUser.MobilePhone ?? "Value not set"}\n");
             Console.WriteLine($"About me:\n{ logedInUser.AboutMe ?? "Value not set"}\n");
+
+           while (true)
+           {
+                Console.WriteLine("Sign user out? [y/n]");
+                var input = Console.ReadLine().ToLower();
+
+                if (string.IsNullOrEmpty(input) || (input[0] != 'y' && input[0] != 'n'))
+                {
+                    continue;
+                }
+
+                if (input[0] == 'y')
+                {
+                    msalClientHelper.SignOutUser();
+                    Console.WriteLine("User signed-out successfully.");
+                }
+
+                Console.WriteLine("User is not signed-out and credentials are still cached.");
+                return;
+           }
         }
     }
 }
