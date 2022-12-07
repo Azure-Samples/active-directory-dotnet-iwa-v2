@@ -71,7 +71,7 @@ namespace iwa_console.MSAL
         {
             this.PublicClientApplicationBuilder = PublicClientApplicationBuilder.Create(AzureADConfig.ClientId)
                 .WithAuthority(string.Format(AzureADConfig.Authority, AzureADConfig.TenantId))
-                .WithRedirectUri(string.Format(AzureADConfig.RedirectURI, AzureADConfig.ClientId))      // Skipping this will make MSAL fall back to older Uri: urn:ietf:wg:oauth:2.0:oob
+                .WithRedirectUri(AzureADConfig.RedirectURI)      // Skipping this will make MSAL fall back to older Uri: urn:ietf:wg:oauth:2.0:oob
                 .WithLogging(new IdentityLogger(EventLogLevel.Warning), enablePiiLogging: false)        // This is the currently recommended way to log MSAL message. For more info refer to https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/logging. Set Identity Logging level to Warning which is a middle ground
                 .WithClientCapabilities(new string[] { "cp1" });                                        // declare this client app capable of receiving CAE events- https://aka.ms/clientcae
         }
