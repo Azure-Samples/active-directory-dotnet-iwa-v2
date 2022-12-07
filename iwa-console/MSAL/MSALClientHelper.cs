@@ -80,12 +80,12 @@ namespace iwa_console.MSAL
         /// Initializes the public client application of MSAL.NET with the required information to correctly authenticate the user.
         /// </summary>
         /// <returns>An IAccount of an already signed-in user (if available)</returns>
-        public async Task InitializePublicClientAppForWAMBrokerAsync(IntPtr? handle)
+        public async Task InitializePublicClientAppForWAMBrokerAsync()
         {
             // Initialize the MSAL library by building a public client application for authenticating using WAM
             this.PublicClientApplication = this.PublicClientApplicationBuilder
                     .WithBrokerPreview(true)
-                    .WithParentActivityOrWindow(() => handle.Value) // Specify Window handle - (required for WAM).
+                    .WithParentActivityOrWindow(() => WindowsHelper.GetConsoleOrTerminalWindow()) // Specify Window handle - (required for WAM).
                     .Build();
 
             // Cache configuration and hook-up to public application. Refer to https://github.com/AzureAD/microsoft-authentication-extensions-for-dotnet/wiki/Cross-platform-Token-Cache#configuring-the-token-cache
@@ -103,21 +103,6 @@ namespace iwa_console.MSAL
 
             var msalcachehelper = await MsalCacheHelper.CreateAsync(storageProperties);
             msalcachehelper.RegisterCache(this.PublicClientApplication.UserTokenCache);
-        }
-
-        /// <summary>
-        /// Attaches the token cache to the Public Client app.
-        /// </summary>
-        /// <returns>IAccount list of already signed-in users (if available)</returns>
-        private async Task<IEnumerable<IAccount>> AttachTokenCache()
-        {
-            // Cache configuration and hook-up to public application. Refer to https://github.com/AzureAD/microsoft-authentication-extensions-for-dotnet/wiki/Cross-platform-Token-Cache#configuring-the-token-cache
-            var storageProperties = new StorageCreationPropertiesBuilder(AzureADConfig.CacheFileName, AzureADConfig.CacheDir).Build();
-            var msalcachehelper = await MsalCacheHelper.CreateAsync(storageProperties);
-            msalcachehelper.RegisterCache(this.PublicClientApplication.UserTokenCache);
-
-            // If the cache file is being reused, we'd find some already-signed-in accounts
-            return await this.PublicClientApplication.GetAccountsAsync().ConfigureAwait(false);
         }
 
         /// <summary>

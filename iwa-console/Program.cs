@@ -27,8 +27,7 @@ namespace iwa_console
 
             var msalClientHelper = new MSALClientHelper(azureADConfig);
 
-            var handle = WindowsHelper.GetConsoleOrTerminalWindow();
-            await msalClientHelper.InitializePublicClientAppForWAMBrokerAsync(handle);
+            await msalClientHelper.InitializePublicClientAppForWAMBrokerAsync();
 
             var msGraphHelper = new MSGraphHelper(msGraphApiConfig, msalClientHelper);
 
