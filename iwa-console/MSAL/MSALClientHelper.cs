@@ -84,10 +84,18 @@ namespace iwa_console.MSAL
         public async Task InitializePublicClientAppAsync()
         {
             // Initialize the MSAL library by building a public client application for authenticating using WAM
-            this.PublicClientApplication = this.PublicClientApplicationBuilder
+            this.PublicClientApplicationBuilder = this.PublicClientApplicationBuilder
                     .WithBrokerPreview(true)
-                    .WithParentActivityOrWindow(() => WindowsHelper.GetConsoleOrTerminalWindow()) // Specify Window handle - (required for WAM).
-                    .Build();
+                    .WithParentActivityOrWindow(() => WindowsHelper.GetConsoleOrTerminalWindow()); 
+
+            // Only add parent activity or window for Windows devices to enable WAM.
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                this.PublicClientApplicationBuilder = this.PublicClientApplicationBuilder
+                    .WithParentActivityOrWindow(() => WindowsHelper.GetConsoleOrTerminalWindow()); // Specify Window handle - (required for WAM).
+            }
+
+            this.PublicClientApplication = this.PublicClientApplicationBuilder.Build();
 
             // Cache configuration and hook-up to public application. Refer to https://github.com/AzureAD/microsoft-authentication-extensions-for-dotnet/wiki/Cross-platform-Token-Cache#configuring-the-token-cache
             var storageProperties = new StorageCreationPropertiesBuilder(AzureADConfig.CacheFileName, AzureADConfig.CacheDir)
