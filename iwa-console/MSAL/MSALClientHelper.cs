@@ -85,8 +85,7 @@ namespace iwa_console.MSAL
         {
             // Initialize the MSAL library by building a public client application for authenticating using WAM
             this.PublicClientApplicationBuilder = this.PublicClientApplicationBuilder
-                    .WithBrokerPreview(true)
-                    .WithParentActivityOrWindow(() => WindowsHelper.GetConsoleOrTerminalWindow()); 
+                    .WithBrokerPreview(true);
 
             // Only add parent activity or window for Windows devices to enable WAM.
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
