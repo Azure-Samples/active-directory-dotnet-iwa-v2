@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace iwa_console.MSAL
@@ -80,7 +81,7 @@ namespace iwa_console.MSAL
         /// Initializes the public client application of MSAL.NET with the required information to correctly authenticate the user.
         /// </summary>
         /// <returns>An IAccount of an already signed-in user (if available)</returns>
-        public async Task InitializePublicClientAppForWAMBrokerAsync()
+        public async Task InitializePublicClientAppAsync()
         {
             // Initialize the MSAL library by building a public client application for authenticating using WAM
             this.PublicClientApplication = this.PublicClientApplicationBuilder
@@ -177,9 +178,17 @@ namespace iwa_console.MSAL
             // If the operating system has UI
             if (this.PublicClientApplication.IsUserInteractive())
             {
-                return await this.PublicClientApplication.AcquireTokenInteractive(scopes)
-                    .WithLoginHint(existingAccount?.Username ?? String.Empty)
-                    // .WithParentActivityOrWindow(WindowsHelper.GetConsoleOrTerminalWindow()) // TODO: fix it
+                var acquireTokenParameterBuilder = this.PublicClientApplication.AcquireTokenInteractive(scopes) 
+                    .WithLoginHint(existingAccount?.Username ?? String.Empty);
+
+                // Only add parent activity or window for Windows devices to enable WAM.
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    acquireTokenParameterBuilder = acquireTokenParameterBuilder
+                        .WithParentActivityOrWindow(WindowsHelper.GetConsoleOrTerminalWindow());
+                }
+
+                return await acquireTokenParameterBuilder
                     .ExecuteAsync()
                     .ConfigureAwait(false);
             }
