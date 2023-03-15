@@ -40,7 +40,7 @@ namespace iwa_console
             var httpClient = new HttpClient();
 
             MyInformation myInformation = new MyInformation(app, httpClient, config.MicrosoftGraphBaseEndpoint);
-            await myInformation.DisplayMeAndMyManagerAsync();
+            await myInformation.DisplayMeAndMyManagerAsync().ConfigureAwait(false);
         }
     }
 }

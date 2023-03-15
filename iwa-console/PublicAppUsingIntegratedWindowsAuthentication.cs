@@ -18,7 +18,6 @@ namespace iwa_console
         /// Constructor of a public application leveraging Integrated Windows Authentication to sign-in a user
         /// </summary>
         /// <param name="app">MSAL.NET Public client application</param>
-        /// <param name="httpClient">HttpClient used to call the protected Web API</param>
         /// <remarks>
         /// For more information see https://aka.ms/msal-net-iwa
         /// </remarks>
@@ -26,6 +25,10 @@ namespace iwa_console
         {
             App = app;
         }
+
+        /// <summary>
+        /// IPublicClientApplication
+        /// </summary>
         protected IPublicClientApplication App { get; private set; }
 
         /// <summary>
@@ -35,7 +38,7 @@ namespace iwa_console
         public async Task<AuthenticationResult> AcquireTokenFromCacheOrIntegratedWindowAuthenticationAsync(IEnumerable<String> scopes)
         {
             AuthenticationResult result = null;
-            var accounts = await App.GetAccountsAsync();
+            var accounts = await App.GetAccountsAsync().ConfigureAwait(false);
 
             if (accounts.Any())
             {
@@ -43,7 +46,7 @@ namespace iwa_console
                 {
                     // Attempt to get a token from the cache (or refresh it silently if needed)
                     result = await App.AcquireTokenSilent(scopes, accounts.FirstOrDefault())
-                        .ExecuteAsync();
+                        .ExecuteAsync().ConfigureAwait(false);
                 }
                 catch (MsalUiRequiredException)
                 {
@@ -53,7 +56,8 @@ namespace iwa_console
             // Cache empty or no token for account in the cache, attempt by Integrated Windows Authentication
             if (result == null)
             {
-                result = await GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync(scopes);
+                result = await GetTokenForWebApiUsingIntegratedWindowsAuthenticationAsync(scopes)
+                    .ConfigureAwait(false);
             }
 
             return result;
@@ -70,7 +74,7 @@ namespace iwa_console
             try
             {
                 result = await App.AcquireTokenByIntegratedWindowsAuth(scopes)
-                    .ExecuteAsync();
+                    .ExecuteAsync().ConfigureAwait(false);
             }
             catch (MsalUiRequiredException ex) when (ex.Message.Contains("AADSTS65001"))
             {
