@@ -25,8 +25,10 @@ namespace iwa_console
             HttpClient = httpClient;
         }
 
+        /// <summary>
+        /// HttpClient
+        /// </summary>
         protected HttpClient HttpClient { get; private set; }
-
 
         /// <summary>
         /// Calls the protected web API and processes the result
@@ -45,10 +47,10 @@ namespace iwa_console
                 }
                 defaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", accessToken);
 
-                HttpResponseMessage response = await HttpClient.GetAsync(webApiUrl);
+                HttpResponseMessage response = await HttpClient.GetAsync(webApiUrl).ConfigureAwait(false);
                 if (response.IsSuccessStatusCode)
                 {
-                    string json = await response.Content.ReadAsStringAsync();
+                    string json = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     JObject result = JsonConvert.DeserializeObject(json) as JObject;
                     Console.ForegroundColor = ConsoleColor.Gray;
                     processResult(result);
@@ -57,7 +59,7 @@ namespace iwa_console
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine($"Failed to call the web API: {response.StatusCode}");
-                    string content = await response.Content.ReadAsStringAsync();
+                    string content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     Console.WriteLine($"Content: {content}");
                 }
                 Console.ResetColor();
