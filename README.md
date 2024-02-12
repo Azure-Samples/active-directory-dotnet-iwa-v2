@@ -4,13 +4,13 @@ languages:
 - csharp
 - powershell
 products:
-- azure-active-directory
-description: "This sample demonstrates how to use MSAL.NET from apps that run on a domain joined or AAD joined Windows machine."
+- microsoft-entra-id
+description: "This sample demonstrates how to use MSAL.NET from apps that run on a domain joined or Microsoft Entra joined Windows machine."
 urlFragment: active-directory-dotnet-iwa-v2
 ---
 
-# Invoking an API protected by Microsoft identity platform with Integrated Windows Authentication, on a Windows domain joined or AAD joined machine
-[![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/active-directory-dotnet-iwa-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=692)
+# Invoking an API protected by Microsoft identity platform with Integrated Windows Authentication, on a Windows domain joined or Microsoft Entra joined machine
+[![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/aad%20Samples/.NET%20client%20samples/active-directory-dotnet-iwa-v2-CI)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=692)
 
 > We have renamed the default branch to main. To rename your local repo follow the directions [here](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/renaming-a-branch#updating-a-local-clone-after-a-branch-name-changes).
 
@@ -18,7 +18,7 @@ urlFragment: active-directory-dotnet-iwa-v2
 
 ### Overview
 
-This sample demonstrates how to use MSAL.NET from apps that run on a domain joined or AAD joined Windows machine. It enables these apps to:
+This sample demonstrates how to use MSAL.NET from apps that run on a domain joined or Microsoft Entra joined Windows machine. It enables these apps to:
 
 - authenticate the user signed-in on the Windows machine
 - and call to a web API (in this case, the [Microsoft Graph](https://graph.microsoft.com))
@@ -39,8 +39,8 @@ To run this sample, you'll need:
 
 - [Visual Studio 2017](https://aka.ms/vsdownload)
 - An Internet connection
-- An Azure Active Directory (Azure AD) tenant. For more information on how to get an Azure AD tenant, see [How to get an Azure AD tenant](https://azure.microsoft.com/documentation/articles/active-directory-howto-tenant/)
-- A user account in your Azure AD tenant. This sample will not work with a Microsoft account (formerly Windows Live account). Therefore, if you signed in to the [Azure portal](https://portal.azure.com) with a Microsoft account and have never created a user account in your directory before, you need to do that now.
+- a Microsoft Entra tenant. For more information on how to get a Microsoft Entra tenant, see [How to get a Microsoft Entra tenant](https://azure.microsoft.com/documentation/articles/active-directory-howto-tenant/)
+- A user account in your Microsoft Entra tenant. This sample will not work with a Microsoft account (formerly Windows Live account). Therefore, if you signed in to the [Microsoft Entra admin center](https://entra.microsoft.com) with a Microsoft account and have never created a user account in your directory before, you need to do that now.
 
 ### Step 1: Clone or download this repository
 
@@ -60,18 +60,18 @@ Open the solution in Visual Studio, restore the NuGet packages, select the proje
 
 #### Operating the sample
 
-When you run the sample, if you are running on a domain joined or AAD joined Windows machine, it will display your information as well as the information about your manager.
+When you run the sample, if you are running on a domain joined or Microsoft Entra joined Windows machine, it will display your information as well as the information about your manager.
 
 ### Step 2:(Optional): Configure the sample as an app in your directory tenant
 
-The instructions so far used the Azure AD entry for the app in a Microsoft test tenant: given that the app is multi-tenant, anybody can run the sample against that app registration.
-To register your project in your own Azure AD tenant, you can find instructions to manually provision the sample in your own tenant, so that you can exercise complete control on the app settings and behavior.
+The instructions so far used the Microsoft Entra ID entry for the app in a Microsoft test tenant: given that the app is multi-tenant, anybody can run the sample against that app registration.
+To register your project in your own Microsoft Entra tenant, you can find instructions to manually provision the sample in your own tenant, so that you can exercise complete control on the app settings and behavior.
 
 There is one project in this sample. To register it, you can:
 
-- either follow the steps [Step 2: Register the sample with your Azure Active Directory tenant](#step-2-register-the-sample-with-your-azure-active-directory-tenant) and [Step 3:  Configure the sample to use your Azure AD tenant](#choose-the-azure-ad-tenant-where-you-want-to-create-your-applications)
+- either follow the steps [Step 2: Register the sample with your Microsoft Entra tenant](#step-2-register-the-sample-with-your-azure-active-directory-tenant) and [Step 3:  Configure the sample to use your Microsoft Entra tenant](#choose-the-azure-ad-tenant-where-you-want-to-create-your-applications)
 - or use PowerShell scripts that:
-  - **automatically** creates the Azure AD applications and related objects (passwords, permissions, dependencies) for you
+  - **automatically** creates the Microsoft Entra applications and related objects (passwords, permissions, dependencies) for you
   - modify the Visual Studio projects' configuration files.
 
 If you want to use this automation:
@@ -80,7 +80,7 @@ If you want to use this automation:
    ```PowerShell
    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
    ```
-1. Run the script to create your Azure AD application and configure the code of the sample application accordingly. 
+1. Run the script to create your Microsoft Entra application and configure the code of the sample application accordingly. 
    ```PowerShell
    .\AppCreationScripts\Configure.ps1
    ```
@@ -90,13 +90,13 @@ If you want to use this automation:
 
 If you don't want to use this automation, follow the steps below
 
-#### Choose the Azure AD tenant where you want to create your applications
+#### Choose the Microsoft Entra tenant where you want to create your applications
 
 As a first step you'll need to:
 
-1. Sign in to the [Azure portal](https://portal.azure.com) using either a work or school account or a personal Microsoft account.
-1. If your account is present in more than one Azure AD tenant, select `Directory + Subscription` at the top right corner in the menu on top of the page, and switch your portal session to the desired Azure AD tenant.   
-1. In the left-hand navigation pane, select the **Azure Active Directory** service, and then select **App registrations**.
+1. Sign in to the [Microsoft Entra admin center](https://entra.microsoft.com) using either a work or school account or a personal Microsoft account.
+1. If your account is present in more than one Microsoft Entra tenant, select `Directory + Subscription` at the top right corner in the menu on top of the page, and switch your portal session to the desired Microsoft Entra tenant.   
+1. In the left-hand navigation pane, select the **Microsoft Entra ID** service, and then select **App registrations**.
 
 #### Register the client app (iwa-console)
 
@@ -120,9 +120,9 @@ As a first step you'll need to:
    Therefore no consent can be presented via a UI and accepted to use the service app. 
    Click the **Grant/revoke admin consent for {tenant}** button, and then select **Yes** when you are asked if you want to grant consent for the
    requested permissions for all account in the tenant.
-   You need to be an Azure AD tenant admin to do this.
+   You need to be a Microsoft Entra tenant admin to do this.
 
-### Step 3:  Configure the sample to use your Azure AD tenant
+### Step 3:  Configure the sample to use your Microsoft Entra tenant
 
 In the steps below, "ClientID" is the same as "Application ID" or "AppId".
 
@@ -133,7 +133,7 @@ Open the solution in Visual Studio to configure the projects
 > Note: if you used the setup scripts, the changes below will have been applied for you
 
 1. Open the `iwa-console\appsettings.json` file
-1. Find the line where `clientId` is set and replace the existing value with the application ID (clientId) of the `iwa-console` application copied from the Azure portal.
+1. Find the line where `clientId` is set and replace the existing value with the application ID (clientId) of the `iwa-console` application copied from the Microsoft Entra admin center.
 1. [optionally] Find the line where `Tenant` is set and replace the existing value with your tenant ID.
 
 Clean the solution, rebuild the solution, and start it in the debugger.
@@ -177,9 +177,9 @@ For more information, see MSAL.NET's conceptual documentation:
 - [Quickstart: Register an application with the Microsoft identity platform](https://docs.microsoft.com/azure/active-directory/develop/quickstart-register-app)
 - [Quickstart: Configure a client application to access web APIs](https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis)
 
-- [Understanding Azure AD application consent experiences](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience)
+- [Understanding Microsoft Entra application consent experiences](https://docs.microsoft.com/en-us/azure/active-directory/develop/application-consent-experience)
 - [Understand user and admin consent](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-convert-app-to-be-multi-tenant#understand-user-and-admin-consent)
-- [Application and service principal objects in Azure Active Directory](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
+- [Application and service principal objects in Microsoft Entra ID](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals)
 
 - [Integrated Windows Authentication](https://aka.ms/msal-net-iwa)
 - [Customizing Token cache serialization](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/wiki/token-cache-serialization) (was not done in this sample, but you might want to add a serialized cache)
